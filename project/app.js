@@ -18,3 +18,4 @@ db.on("error", console.error.bind(console, "connecton error:"));
 db.once("open", ()=>{
     console.log("DB connected!!!")
 })
+console.log('')
