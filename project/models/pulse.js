@@ -3,9 +3,25 @@ const Schema = mongoose.Schema;
 
 
 const PulseSchema = new Schema({
-    camculated_at: Date,
+    calculated_at: Date,
+    pulse: Number,
+    metadata:{
+        patient:{
+            type: Schema.Types.ObjectId,
+            ref:'Patient'
+        }
+    }
 
-})
+},{
+    timeseries:{
+        timeField: 'calculated_at',
+        metaField: 'metadata',
+        granularity: 'seconds'
+
+    },
+    expireAfterSeconds:86400
+}
+)
 
 
 
