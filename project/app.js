@@ -8,8 +8,18 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const session = require('express-session')
 const flash = require('connect-flash')
+var livereload = require("livereload");
+var connectLiveReload = require("connect-livereload");
+
+const liveReloadServer = livereload.createServer();
+liveReloadServer.server.once("connection", () => {
+  setTimeout(() => {
+    liveReloadServer.refresh("/");
+  }, 100);
+});
 
 const Test = require('./models/test')
+const Pulse = require('./models/pulse')
 
 
 const sessionConfig = {
@@ -67,6 +77,8 @@ app.get('/1', (req,res)=>{
     
 })
 
+
+
 app.get('/team', (req,res)=>{
     res.render('team.ejs')
     
@@ -87,6 +99,19 @@ app.get('/test', (req,res)=>{
 })
 
 
+app.get('/:id',connectLiveReload(), async(req,res)=>{
+    if(!req.isAuthenticated()){
+        return res.send("not authenticated")
+    }
+    const {id} = req.params;
+    const test = await Test.findById(req.params.id).populate('pulse')
+    if(!test._id.equals(req.user._id)){
+        return res.send("not owner")
+    }
+
+    res.render('dashboard.ejs',{test} )
+})
+
 app.post('/new',async(req,res)=>{
 try{
     const{username, email, password} = req.body;
@@ -99,6 +124,8 @@ try{
 
 })
 
+
+
 app.post('/login', passport.authenticate('local'), (req,res)=>{
     res.redirect('/')
     
@@ -110,6 +137,26 @@ app.post('/', (req,res)=>{
     res.redirect("/")
     
     
+})
+
+app.post('/:id/esp32', async(req,res)=>{
+    const {id} = req.params
+    const test = await Test.findById(id)
+    const rate = req.body.pulse;
+    const pulse = new Pulse();
+    const date = new Date();
+    pulse.calculated_at = date.getTime()
+    pulse.pulse = req.body.pulse;
+    pulse.metadata.patient = id;
+    pulse.rate = req.body.pulse;
+    pulse.save()
+    test.pulse.push(pulse)
+    test.save()
+   // console.log(pulse)
+    console.log(req.params)
+    console.log(req.body)
+    res.sendStatus(200)
+
 })
 
 app.get("*",(req,res)=>{

@@ -1,0 +1,13 @@
+<% layout('layouts/inner-page') %>
+
+<h1>login to see page</h1>
+
+<% if (currentUser && test._id.equals(currentUser._id)) { %>
+    <h2><%= test._id %></h2>
+    <h2><%= test.email %></h2>
+    
+    <% for( let p of test.pulse  ) { %>
+        <div><%= p.pulse %></div>
+
+    <% } %>
+<% } %>

@@ -12,6 +12,14 @@ const PulseSchema = new Schema({
         },
     },
 
+},{
+    timeseries:{
+        timeField: 'calculated_at',
+        metaField: 'metadata',
+        granularity: 'seconds',
+
+    },
+    expireAfterSeconds:10,
 },
 )
 
