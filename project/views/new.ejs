@@ -7,10 +7,10 @@
         <h2>Create a new Patient</h2>
          </div>
 
-      <form action="/" method="post" role="form" class="validated-form" >
+      <form action="/new" method="post" role="form" class="validated-form" >
         <div class="row">
           <div class="col-md-4 form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+            <input type="text" name="username" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
            
           </div>
           <div class="col-md-4 form-group mt-3 mt-md-0">
@@ -18,36 +18,14 @@
             
           </div>
           <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Passwrd" required>
             
           </div>
+
         </div>
-        <div class="row">
-          <div class="col-md-4 form-group mt-3">
-            <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
-            
-          </div>
-          <div class="col-md-4 form-group mt-3">
-            <select name="department" id="department" class="form-select">
-              <option value="">Select Department</option>
-              <option value="Department 1">Department 1</option>
-              <option value="Department 2">Department 2</option>
-              <option value="Department 3">Department 3</option>
-            </select>
-            
-          </div>
-          <div class="col-md-4 form-group mt-3">
-            <select name="doctor" id="doctor" class="form-select">
-              <option value="">Select Doctor</option>
-              <option value="Doctor 1">Doctor 1</option>
-              <option value="Doctor 2">Doctor 2</option>
-              <option value="Doctor 3">Doctor 3</option>
-            </select>
-            
-          </div>
-        </div>
+          <br>
         <br>
-        <div class="text-center"><button class="btn btn-success">Make an Appointment</button></div>
+        <div class="text-center"><button class="btn btn-success">create</button></div>
       </form>
 
     </div>
