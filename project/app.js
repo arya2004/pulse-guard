@@ -56,9 +56,9 @@ app.get('/test', (req,res)=>{
 })
 
 app.post('/', (req,res)=>{
-    
+    console.log(req.params);
     console.log(req.body);
-    res.sendStatus(200);
+    res.redirect("/")
     
     
 })
