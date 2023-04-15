@@ -32,9 +32,26 @@ app.engine('ejs', ejsMate)
 
 
 app.get('/', (req,res)=>{
-    console.log(req.params);
-   // console.log(req)
-   res.sendStatus(200);
+    res.render('index.ejs')
+    
+})
+app.get('/1', (req,res)=>{
+    res.render('inner-page.ejs')
+    
+})
+
+app.get('/team', (req,res)=>{
+    res.render('team.ejs')
+    
+})
+
+app.get('/new', (req,res)=>{
+    res.render('new.ejs')
+    
+})
+
+app.get('/test', (req,res)=>{
+    res.render('test.ejs')
     
 })
 
