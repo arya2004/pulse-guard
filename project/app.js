@@ -10,6 +10,8 @@ const session = require('express-session')
 const flash = require('connect-flash')
 var livereload = require("livereload");
 var connectLiveReload = require("connect-livereload");
+const d3 = import("d3");
+
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -73,7 +75,10 @@ app.get('/', (req,res)=>{
     
 })
 app.get('/1', (req,res)=>{
-    res.render('inner-page.ejs')
+    let a = (Math.random()*100).toString();
+    console.log(a)
+    res.send(a);
+    
     
 })
 
@@ -108,8 +113,11 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
     if(!test._id.equals(req.user._id)){
         return res.send("not owner")
     }
-
+    let arr = [test.pulse[test.pulse.length -1].pulse,test.pulse[test.pulse.length -2].pulse,test.pulse[test.pulse.length -3].pulse,test.pulse[test.pulse.length -4].pulse]
+    console.log(arr)
+     //arr = JSON.stringify(arr);
     res.render('dashboard.ejs',{test} )
+
 })
 
 app.post('/new',async(req,res)=>{

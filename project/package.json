@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^4.2.1",
     "connect-flash": "^0.1.1",
     "connect-livereload": "^0.6.1",
+    "d3": "^7.8.4",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.9",
     "ejs-mate": "^4.0.0",

@@ -1,13 +1,69 @@
 <% layout('layouts/inner-page') %>
-
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <h1>login to see page</h1>
 
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
     <h2><%= test._id %></h2>
     <h2><%= test.email %></h2>
-    
-    <% for( let p of test.pulse  ) { %>
-        <div><%= p.pulse %></div>
-
+    <h1><%= test.pulse[test.pulse.length -7].pulse %></h1>
+  
+  
+    <% for( let p of test.pulse ) { %>
+        <span><%= p.pulse %></span>
+        <span><%= p.pulse %>,</span>
+        
+        
     <% } %>
-<% } %>
+ 
+
+<% } %> 
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<div id="chart-temperature" class="container"></div>
+
+
+<script>
+    var chartT = new Highcharts.Chart({
+      chart:{ renderTo : 'chart-temperature' },
+      title: { text: 'BME280 Temperature' },
+      series: [{
+        showInLegend: false,
+        data: []
+      }],
+      plotOptions: {
+        line: { animation: false,
+          dataLabels: { enabled: true }
+        },
+        series: { color: '#059e8a' }
+      },
+      xAxis: { type: 'datetime',
+        dateTimeLabelFormats: { second: '%H:%M:%S' }
+      },
+      yAxis: {
+        title: { text: 'Temperature (Celsius)' }
+        //title: { text: 'Temperature (Fahrenheit)' }
+      },
+      credits: { enabled: false }
+    });
+    setInterval(function ( ) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var x = (new Date()).getTime(),
+              y = parseFloat(this.responseText);
+          //console.log(this.responseText);
+          if(chartT.series[0].data.length > 40) {
+            chartT.series[0].addPoint([x, y], true, true, true);
+          } else {
+            chartT.series[0].addPoint([x, y], true, false, true);
+          }
+        }
+      };
+      xhttp.open("GET", "/1", true);
+      xhttp.send();
+    }, 3000 ) ;
+    
+  
+  
+    </script>
+
