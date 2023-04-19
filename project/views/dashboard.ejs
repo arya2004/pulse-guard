@@ -32,7 +32,7 @@
       }],
       plotOptions: {
         line: { animation: false,
-          dataLabels: { enabled: true }
+          dataLabels: { enabled: false }
         },
         series: { color: '#059e8a' }
       },
@@ -52,16 +52,16 @@
           var x = (new Date()).getTime(),
               y = parseFloat(this.responseText);
           //console.log(this.responseText);
-          if(chartT.series[0].data.length > 40) {
+          if(chartT.series[0].data.length > 10) {
             chartT.series[0].addPoint([x, y], true, true, true);
           } else {
             chartT.series[0].addPoint([x, y], true, false, true);
           }
         }
       };
-      xhttp.open("GET", "/1", true);
+      xhttp.open("GET", "/2", true);
       xhttp.send();
-    }, 3000 ) ;
+    }, 2000) ;
     
   
   

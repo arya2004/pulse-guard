@@ -75,9 +75,21 @@ app.get('/', (req,res)=>{
     
 })
 app.get('/1', (req,res)=>{
-    let a = (Math.random()*100).toString();
+    let a = (70+(Math.random()*10)-(Math.random()*10)).toString();
     console.log(a)
     res.send(a);
+    
+    
+})
+app.get('/2', async(req,res)=>{
+    let pulse = await Pulse.findOne().sort({_id:-1})
+   // let pulse = await Pulse.find().sort({ _id: 1 }).limit(1);
+    let pulse1 = pulse.toString();
+
+    console.log(pulse.pulse)
+   
+    //console.log(pulse)
+    res.send(pulse.pulse.toString());
     
     
 })
