@@ -41,7 +41,21 @@
 <body>
 
   <!-- ======= Top Bar ======= -->
-
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex justify-content-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">arya20j4@gmail.com</a>
+        <i class="bi bi-phone"></i> +91 8767933834
+      </div>
+      <div class="d-none d-lg-flex social-links align-items-center">
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+        <a href="#" class="github"><i class="bi bi-github"></i></a>
+        <a href="#" class="discord"><i class="bi bi-discord"></i></a>
+        <a href="#" class="reddit"><i class="bi bi-reddit"></i></i></a>
+      </div>
+    </div>
+  </div>
 
   <!-- ======= Header ======= -->
   <header id="header" class="d-flex align-items-center sticky-top ">
@@ -67,7 +81,7 @@
       <% } %>
       <% if (currentUser) { %>
     
-        <a href="/" class="appointment-btn scrollto"><span class="d-none d-md-inline">Log</span> Out</a>
+        <a href="/logout" class="appointment-btn scrollto"><span class="d-none d-md-inline">Log</span> Out</a>
       <% } %>
 
 

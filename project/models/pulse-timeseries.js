@@ -18,9 +18,9 @@ const PulseSchema = new Schema({
         metaField: 'metadata',
         granularity: 'seconds',
 
+        },
+    expireAfterSeconds:30,
     },
-    expireAfterSeconds:10,
-},
 )
 
 

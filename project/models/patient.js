@@ -15,29 +15,60 @@ const PatientSchema = new Schema({
         type: Number,
         required: true,
     },
-    Level_of_Hemoglobin:{
-        type: Number,
-        required: true
+
+    sex:{
+        type:String,
+        required: true,
+        enum: ['M','F']
     },
-    Genetic_Pedigree_Coefficient:{
-        type:Boolean,
-        required: true
+    chestpaintype:{
+        type:String,
+        required:true,
+        enum:['TA','ATA','NAP', 'ASY']
     },
-    BMI:{
+    restingbloodpressure:{
         type:Number,
-        required: true
+        required:true
     },
-    Sex:{
-        type:Boolean,
-        required: true
+    cholestrol:{
+        type:Number,
+        required:true
     },
-    Pregnancy:{
-        type:Boolean,
-        required: true
+    fastingbloodsugar:{
+        type: Boolean,
+        required:true
     },
-    Smoking:{
+    resting_ecg:{
+        type:String,
+        required:true,
+        enum:['Normal','ST','LVH']
+    },
+    max_hr:{
+        type:Number,
+        required:true,
+    },
+    exerciseangia:{
+        type: String,
+        required:true,
+        enum:['Y','N']
+    },
+    oldpeak:{
+        type:Number,
+        required:true,
+    },
+    st_slope:{
+        type:String,
+        required:true,
+        enum:['Up','Down','Flat']
+    },
+    heart_disease:{
         type:Boolean,
-        required: true
+        required:true
+    },
+    isDoctor:{
+        type:Boolean,
+        default: false
+       
     },
     pulse:[{
         type: Schema.Types.ObjectId,

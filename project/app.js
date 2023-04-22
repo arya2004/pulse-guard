@@ -110,6 +110,14 @@ app.get('/login', (req,res)=>{
     
 })
 
+app.get('/logout',(req,res,next)=>{
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        req.flash('success', "Goodbye!");
+        res.redirect('/');
+      });
+    }); 
+
 app.get('/test', (req,res)=>{
     res.render('test.ejs')
     

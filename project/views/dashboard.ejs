@@ -5,15 +5,10 @@
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
     <h2><%= test._id %></h2>
     <h2><%= test.email %></h2>
-    <h1><%= test.pulse[test.pulse.length -7].pulse %></h1>
+   
   
   
-    <% for( let p of test.pulse ) { %>
-        <span><%= p.pulse %></span>
-        <span><%= p.pulse %>,</span>
-        
-        
-    <% } %>
+  
  
 
 <% } %> 
