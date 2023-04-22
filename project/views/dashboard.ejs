@@ -1,10 +1,10 @@
 <% layout('layouts/inner-page') %>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<h1>login to see page</h1>
+
 
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
-    <h2><%= test._id %></h2>
-    <h2><%= test.email %></h2>
+ 
+    <h2> Welcome, <%= test.username %></h2>
    
   
   
@@ -20,7 +20,7 @@
 <script>
     var chartT = new Highcharts.Chart({
       chart:{ renderTo : 'chart-temperature' },
-      title: { text: 'BME280 Temperature' },
+      title: { text: 'Live Patient Pulse' },
       series: [{
         showInLegend: false,
         data: []
@@ -35,7 +35,7 @@
         dateTimeLabelFormats: { second: '%H:%M:%S' }
       },
       yAxis: {
-        title: { text: 'Temperature (Celsius)' }
+        title: { text: 'Pulse Rate' }
         //title: { text: 'Temperature (Fahrenheit)' }
       },
       credits: { enabled: false }

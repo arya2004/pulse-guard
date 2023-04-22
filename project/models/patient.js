@@ -12,58 +12,58 @@ const PatientSchema = new Schema({
         unique: true
     },
     age:{
-        type: Number,
+        type: Number,//
         required: true,
     },
 
     sex:{
-        type:String,
+        type:String,//
         required: true,
         enum: ['M','F']
     },
     chestpaintype:{
         type:String,
-        required:true,
+        required:true,//
         enum:['TA','ATA','NAP', 'ASY']
     },
     restingbloodpressure:{
-        type:Number,
+        type:Number,//
         required:true
     },
     cholestrol:{
-        type:Number,
+        type:Number,//
         required:true
     },
     fastingbloodsugar:{
-        type: Boolean,
+        type: Boolean,//
         required:true
     },
     resting_ecg:{
         type:String,
-        required:true,
+        required:true,//
         enum:['Normal','ST','LVH']
     },
     max_hr:{
-        type:Number,
+        type:Number,//
         required:true,
     },
     exerciseangia:{
         type: String,
-        required:true,
+        required:true,//
         enum:['Y','N']
     },
     oldpeak:{
         type:Number,
-        required:true,
+        required:true,//
     },
     st_slope:{
         type:String,
-        required:true,
+        required:true,//
         enum:['Up','Down','Flat']
     },
     heart_disease:{
         type:Boolean,
-        required:true
+        required:true//
     },
     isDoctor:{
         type:Boolean,

@@ -22,6 +22,7 @@ liveReloadServer.server.once("connection", () => {
 
 const Test = require('./models/test')
 const Pulse = require('./models/pulse')
+const Patient = require('./models/patient')
 
 
 const sessionConfig = {
@@ -57,10 +58,14 @@ app.use(session(sessionConfig))
 app.use(flash())
  app.use(passport.initialize())
 app.use(passport.session())
-passport.use(new localStrategy(Test.authenticate()))
 
-passport.serializeUser(Test.serializeUser())
-passport.deserializeUser(Test.deserializeUser())
+
+
+
+passport.use(new localStrategy(Patient.authenticate()))
+passport.serializeUser(Patient.serializeUser())
+passport.deserializeUser(Patient.deserializeUser())
+
 
 //universal middleware
 app.use((req,res,next) =>{
@@ -129,7 +134,7 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
         return res.send("not authenticated")
     }
     const {id} = req.params;
-    const test = await Test.findById(req.params.id).populate('pulse')
+    const test = await Patient.findById(req.params.id).populate('pulse')
     if(!test._id.equals(req.user._id)){
         return res.send("not owner")
     }
@@ -142,12 +147,13 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
 app.post('/new',async(req,res)=>{
 try{
     const{username, email, password} = req.body;
-    const test = new Test({username, email});
-    const registeredTest = await Test.register(test,password)
+    const patient = new Patient(req.body);
+    const registeredPatient = await Patient.register(patient,password)
+    console.log(registeredPatient)
     res.redirect('/')
 }catch(e){
     res.redirect('/')
-}
+ }
 
 })
 
@@ -168,7 +174,7 @@ app.post('/', (req,res)=>{
 
 app.post('/:id/esp32', async(req,res)=>{
     const {id} = req.params
-    const test = await Test.findById(id)
+    const test = await Patient.findById(id)
     const rate = req.body.pulse;
     const pulse = new Pulse();
     const date = new Date();
