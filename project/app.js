@@ -125,8 +125,7 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
     if(!test._id.equals(req.user._id)){
         return res.send("not owner")
     }
-    let arr = [test.pulse[test.pulse.length -1].pulse,test.pulse[test.pulse.length -2].pulse,test.pulse[test.pulse.length -3].pulse,test.pulse[test.pulse.length -4].pulse]
-    console.log(arr)
+
      //arr = JSON.stringify(arr);
     res.render('dashboard.ejs',{test} )
 
