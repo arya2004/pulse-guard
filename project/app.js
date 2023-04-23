@@ -23,7 +23,7 @@ liveReloadServer.server.once("connection", () => {
 const Test = require('./models/test')
 const Pulse = require('./models/pulse')
 const Patient = require('./models/patient')
-
+const PulseArchieve = require('./models/pulse_archive')
 
 const sessionConfig = {
     secret: 'thisshouldbeabetersectere',
@@ -62,8 +62,10 @@ app.use(passport.session())
 
 
 
-passport.use(new localStrategy(Patient.authenticate()))
+
+passport.use('patientLocal',new localStrategy(Patient.authenticate()))
 passport.serializeUser(Patient.serializeUser())
+
 passport.deserializeUser(Patient.deserializeUser())
 
 
@@ -74,6 +76,7 @@ app.use((req,res,next) =>{
     res.locals.error = req.flash('error');
     next();
 })
+
 
 app.get('/', (req,res)=>{
     res.render('index.ejs')
@@ -86,6 +89,8 @@ app.get('/1', (req,res)=>{
     
     
 })
+
+
 app.get('/2', async(req,res)=>{
     let pulse = await Pulse.findOne().sort({_id:-1})
    // let pulse = await Pulse.find().sort({ _id: 1 }).limit(1);
@@ -99,7 +104,10 @@ app.get('/2', async(req,res)=>{
     
 })
 
-
+app.get('/3', (req,res)=>{
+    res.render('tables-data.ejs')
+    
+})
 
 app.get('/team', (req,res)=>{
     res.render('team.ejs')
@@ -159,10 +167,12 @@ try{
 
 
 
-app.post('/login', passport.authenticate('local'), (req,res)=>{
+app.post('/login', passport.authenticate('patientLocal'), (req,res)=>{
     res.redirect('/')
     
 })
+
+
 
 app.post('/', (req,res)=>{
     console.log(req.params);
@@ -174,6 +184,17 @@ app.post('/', (req,res)=>{
 
 app.post('/:id/esp32', async(req,res)=>{
     const {id} = req.params
+    let pulse_archive = await Pulse.aggregate([
+        // First sort all the docs by name
+        {$sort: {_id: -1}},
+        // Take the first 100 of those
+        {$limit: 10},
+        // Of those, take only ones where marks > 35
+        //{$match: {marks: {$gt: 35}}}
+       //{$match: {metadata: {id}}}
+       
+    ])
+      console.log(pulse_archive)
     const test = await Patient.findById(id)
     const rate = req.body.pulse;
     const pulse = new Pulse();
@@ -193,7 +214,7 @@ app.post('/:id/esp32', async(req,res)=>{
 })
 
 app.get("*",(req,res)=>{
-    res.render('index.ejs')
+    res.render('pages-error-404.ejs')
 })
 
 app.listen(3000,()=>{

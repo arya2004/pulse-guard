@@ -20,4 +20,4 @@ const DoctorSchema = new Schema({
 
 DoctorSchema.plugin(plm);
 
-module.exports = mongoose.model('DOctor', DoctorSchema)
+module.exports = mongoose.model('Doctor', DoctorSchema)
