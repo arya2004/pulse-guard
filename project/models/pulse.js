@@ -5,12 +5,10 @@ const Schema = mongoose.Schema;
 const PulseSchema = new Schema({
     calculated_at: Date,
     pulse: Number,
-    metadata:{
-        patient:{
+    patient:{
             type: Schema.Types.ObjectId,
             ref:'Patient',
         },
-    },
 
 },
 )

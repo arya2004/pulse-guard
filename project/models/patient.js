@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const plm = require('passport-local-mongoose')
 const Pulse = require('./pulse')
+const PulseArchieve = require('./pulse_archive')
 
 
 const PatientSchema = new Schema({
@@ -73,6 +74,10 @@ const PatientSchema = new Schema({
     pulse:[{
         type: Schema.Types.ObjectId,
         ref: 'Pulse'
+    }],
+    pulseArchieve:[{
+        type: Schema.Types.ObjectId,
+        ref: 'PulseArchieve'
     }]
 })
 

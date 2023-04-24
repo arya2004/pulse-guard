@@ -23,7 +23,10 @@ liveReloadServer.server.once("connection", () => {
 const Test = require('./models/test')
 const Pulse = require('./models/pulse')
 const Patient = require('./models/patient')
-const PulseArchieve = require('./models/pulse_archive')
+const PulseArchieve = require('./models/pulse_archive');
+const pulseTimeseries = require('./models/pulse-timeseries');
+//const PulseArchieve = require('./models/PulseArchieve');
+//const patient = require('./models/patient');
 
 const sessionConfig = {
     secret: 'thisshouldbeabetersectere',
@@ -91,21 +94,33 @@ app.get('/1', (req,res)=>{
 })
 
 
-app.get('/2', async(req,res)=>{
-    let pulse = await Pulse.findOne().sort({_id:-1})
+app.get('/2/:id', async(req,res)=>{
+    console.log(req.params);
+    //console.log(req.body)
+    const {id} = req.params
+    // let pulse = await Pulse.find({ patient: id })
+    // .sort({ _id: -1 })
+    // .limit(1)
+    let pulse = await Pulse.find({patient: id}).sort({_id:-1}).limit(1)
    // let pulse = await Pulse.find().sort({ _id: 1 }).limit(1);
-    let pulse1 = pulse.toString();
+   // let pulse1 = pulse
 
-    console.log(pulse.pulse)
+    console.log(pulse[0].pulse)
    
     //console.log(pulse)
-    res.send(pulse.pulse.toString());
+    res.send(pulse[0].pulse.toString());
     
     
 })
 
 app.get('/3', (req,res)=>{
-    res.render('tables-data.ejs')
+    res.render('doctor.ejs')
+    
+})
+app.get('/4', async(req,res)=>{
+    const archieve = await Patient.find({isDoctor: false}).populate('pulseArchieve')
+    //console.log(archieve[1].pulseArchieve)
+    res.render('t.ejs',{archieve})
     
 })
 
@@ -184,31 +199,56 @@ app.post('/', (req,res)=>{
 
 app.post('/:id/esp32', async(req,res)=>{
     const {id} = req.params
-    let pulse_archive = await Pulse.aggregate([
-        // First sort all the docs by name
-        {$sort: {_id: -1}},
-        // Take the first 100 of those
-        {$limit: 10},
-        // Of those, take only ones where marks > 35
-        //{$match: {marks: {$gt: 35}}}
-       //{$match: {metadata: {id}}}
-       
-    ])
-      console.log(pulse_archive)
+    let items = await Pulse.find({ patient: id })
+    .sort({ _id: -1 })
+    .limit(10)
+    const array = items.map(item => item.pulse);
+    console.log(array);
+
+   //console.log(items);
     const test = await Patient.findById(id)
     const rate = req.body.pulse;
     const pulse = new Pulse();
     const date = new Date();
     pulse.calculated_at = date.getTime()
     pulse.pulse = req.body.pulse;
-    pulse.metadata.patient = id;
+    pulse.patient = id;
     pulse.rate = req.body.pulse;
-    pulse.save()
+     pulse.save()
     test.pulse.push(pulse)
-    test.save()
+    
    // console.log(pulse)
     console.log(req.params)
     console.log(req.body)
+    //bradycardia <40; tachycardia >100
+    let mean = 0;
+    for (let index = 0; index < array.length; index++) {
+         mean = mean+  array[index];
+    }
+    mean = mean/10;
+    if (mean>100) {
+        
+        const tachycardia = new PulseArchieve();
+        tachycardia.calculated_at = date.getTime();
+        tachycardia.pulse = mean;
+        tachycardia.patient = id;
+        test.pulseArchieve.push(tachycardia);  
+        await tachycardia.save() 
+        await test.save()
+        return res.send('70')
+    }
+    if (mean<40) {
+        const bradycardia = new PulseArchieve();
+        bradycardia.calculated_at = date.getTime();
+        bradycardia.pulse = mean;
+        bradycardia.patient = id;
+        test.pulseArchieve.push(bradycardia);
+        await bradycardia.save()
+        await test.save();
+        return res.send('40')
+    }
+    console.log(mean)
+    await test.save()
     res.sendStatus(200)
 
 })

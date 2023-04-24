@@ -25,4 +25,4 @@ const PulseSchema = new Schema({
 
 
 
-module.exports = mongoose.model('Pulse', PulseSchema)
+module.exports = mongoose.model('PulseTs', PulseSchema)
