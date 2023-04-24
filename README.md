@@ -1,4 +1,5 @@
 # pulseGuard
-Current code in master branch and not in main
+Current code in branch-1 branch and not in main
 
-WIll be merged in main after completion
+WIll be merged in master after completion
+
