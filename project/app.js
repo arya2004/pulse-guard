@@ -201,7 +201,7 @@ app.post('/:id/esp32', async(req,res)=>{
         test.pulseArchieve.push(tachycardia);  
         await tachycardia.save() 
         await test.save()
-        return res.send('70')
+        return res.sendStatus(201)
     }
     if (mean<40) {
         const bradycardia = new PulseArchieve();
@@ -211,7 +211,7 @@ app.post('/:id/esp32', async(req,res)=>{
         test.pulseArchieve.push(bradycardia);
         await bradycardia.save()
         await test.save();
-        return res.send('40')
+        return res.sendStatus(202)
     }
     console.log(mean)
     await test.save()
