@@ -6,8 +6,8 @@
 
 const char* ssid = "galaxy123";
 const char* password = "galaxy123";
-String phoneNumber = "+918767933834";
-String apiKey = "7924328";
+String phoneNumber = "";
+String apiKey = "";
 
 const char* serverName = "http://192.168.158.129:3000/6446041a2db998bcf9bdd2da/esp32";
 
