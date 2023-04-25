@@ -5,7 +5,7 @@
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
  
     <h2 > Welcome, <%= test.username %></h2>
-    <p class="madarchod" style="display: none;"><%= currentUser._id %></p>
+    
 <% } %> 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -49,11 +49,11 @@
           }
         }
       };
-      let value = document.querySelector('.madarchod').textContent
-      console.log(value)
-      xhttp.open("GET", `/2/${value}`, true);
-      xhttp.send();
       
+      //console.log(value)
+      xhttp.open("GET", `/2${window.location.pathname}`, true);
+      xhttp.send();
+
     
     }, 1000) ;
     
