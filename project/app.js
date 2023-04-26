@@ -12,6 +12,7 @@ var livereload = require("livereload");
 var connectLiveReload = require("connect-livereload");
 const d3 = import("d3");
 
+
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
   setTimeout(() => {
@@ -24,6 +25,8 @@ const Pulse = require('./models/pulse')
 const Patient = require('./models/patient')
 const PulseArchieve = require('./models/pulse_archive');
 const pulseTimeseries = require('./models/pulse-timeseries');
+const { isDataView } = require('util/types');
+const { isDoctor, isLoggedin, isPatient,ttt } = require('./middleware');
 
 const sessionConfig = {
     secret: 'thisshouldbeabetersectere',
@@ -84,7 +87,7 @@ app.get('/1', (req,res)=>{
 })
 
 
-app.get('/2/:id', async(req,res)=>{
+app.get('/2/:id',isLoggedin,isPatient, async(req,res)=>{
     console.log(req.params);
     const {id} = req.params;
     let pulse = await Pulse.find({patient: id}).sort({_id:-1}).limit(1)
@@ -96,12 +99,12 @@ app.get('/2/:id', async(req,res)=>{
 app.get("/3",(req,res)=>{
     res.render('pages-error-404.ejs')
 })
-app.get('/4', async(req,res)=>{
+app.get('/4',isLoggedin, isDoctor, async(req,res)=>{
     const archieve = await Patient.find({isDoctor: false}).populate('pulseArchieve')
     res.render('t.ejs',{archieve})
 })
 
-app.get('/team', (req,res)=>{
+app.get('/team',(req,res)=>{
     res.render('team.ejs')
     
 })
@@ -115,7 +118,7 @@ app.get('/login', (req,res)=>{
     
 })
 
-app.get('/logout',(req,res,next)=>{
+app.get('/logout',isLoggedin,(req,res,next)=>{
     req.logout(function(err) {
         if (err) { return next(err); }
         req.flash('success', "Goodbye!");
@@ -133,10 +136,11 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
         return res.send("not authenticated")
     }
     const {id} = req.params;
-    const test = await Patient.findById(req.params.id).populate('pulse')
+    const test = await Patient.findById(req.params.id).populate('pulse').populate('pulseArchieve')
     if(!test._id.equals(req.user._id)){
         return res.send("not owner")
     }
+
     res.render('dashboard.ejs',{test} )
 
 })
