@@ -4,18 +4,57 @@
 
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
  
-    <h2> Welcome, <%= test.username %></h2>
-    <h2> Welcome, <%= test.isDoctor %></h2>
-  
-  
-  
- 
-
+    <h2 > Welcome, <%= test.username %></h2>
+    
 <% } %> 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <div id="chart-temperature" class="container"></div>
 
+
+
+
+<section class="section">
+  <div class="row">
+    <div class="col-lg-12">
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Name: <%= test.username %></h5>
+  
+          <p>Age: <%= test.age %>        Gender:<%= test.sex %>     cholestrol: <%= test.cholestrol %></p>
+          <p></p>
+          <!-- Table with stripped rows -->
+          <table class="table datatable">
+            <thead>
+              <tr>
+                
+                <th scope="col">Average Pulse</th>
+                <th scope="col">@</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for( let aa of test.pulseArchieve) { %>
+              
+              
+              <tr>
+                
+                <td><%= aa.pulse %></td>
+                <td><%= aa.calculated_at %></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+
+          
+          <!-- End Table with stripped rows -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <script>
     var chartT = new Highcharts.Chart({
@@ -54,11 +93,13 @@
           }
         }
       };
-      xhttp.open("GET", "/2/6446041a2db998bcf9bdd2da", true);
-      xhttp.send();
       
+      //console.log(value)
+      xhttp.open("GET", `/2${window.location.pathname}`, true);
+      xhttp.send();
+
     
-    }, 2000) ;
+    }, 3500) ;
     
   //console.log(test._id)
  

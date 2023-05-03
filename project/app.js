@@ -11,7 +11,7 @@ const flash = require('connect-flash')
 var livereload = require("livereload");
 var connectLiveReload = require("connect-livereload");
 const d3 = import("d3");
-
+const Push = require('push.js')
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -25,8 +25,8 @@ const Pulse = require('./models/pulse')
 const Patient = require('./models/patient')
 const PulseArchieve = require('./models/pulse_archive');
 const pulseTimeseries = require('./models/pulse-timeseries');
-//const PulseArchieve = require('./models/PulseArchieve');
-//const patient = require('./models/patient');
+const { isDataView } = require('util/types');
+const { isDoctor, isLoggedin, isPatient,ttt } = require('./middleware');
 
 const sessionConfig = {
     secret: 'thisshouldbeabetersectere',
@@ -39,8 +39,6 @@ const sessionConfig = {
     }
 
 }
-
-
 
 mongoose.connect('mongodb://127.0.0.1:27017/patient-data')
 app.use(express.urlencoded({extended: true}))
@@ -59,16 +57,11 @@ app.engine('ejs', ejsMate)
 
 app.use(session(sessionConfig))
 app.use(flash())
- app.use(passport.initialize())
+
+app.use(passport.initialize())
 app.use(passport.session())
-
-
-
-
-
 passport.use('patientLocal',new localStrategy(Patient.authenticate()))
 passport.serializeUser(Patient.serializeUser())
-
 passport.deserializeUser(Patient.deserializeUser())
 
 
@@ -94,37 +87,24 @@ app.get('/1', (req,res)=>{
 })
 
 
-app.get('/2/:id', async(req,res)=>{
+app.get('/2/:id',isLoggedin,isPatient, async(req,res)=>{
     console.log(req.params);
-    //console.log(req.body)
-    const {id} = req.params
-    // let pulse = await Pulse.find({ patient: id })
-    // .sort({ _id: -1 })
-    // .limit(1)
+    const {id} = req.params;
     let pulse = await Pulse.find({patient: id}).sort({_id:-1}).limit(1)
-   // let pulse = await Pulse.find().sort({ _id: 1 }).limit(1);
-   // let pulse1 = pulse
-
     console.log(pulse[0].pulse)
-   
-    //console.log(pulse)
     res.send(pulse[0].pulse.toString());
-    
-    
-})
+    }
+)
 
-app.get('/3', (req,res)=>{
-    res.render('doctor.ejs')
-    
+app.get("/3",(req,res)=>{
+    res.render('pages-error-404.ejs')
 })
-app.get('/4', async(req,res)=>{
+app.get('/4',isLoggedin, isDoctor, async(req,res)=>{
     const archieve = await Patient.find({isDoctor: false}).populate('pulseArchieve')
-    //console.log(archieve[1].pulseArchieve)
     res.render('t.ejs',{archieve})
-    
 })
 
-app.get('/team', (req,res)=>{
+app.get('/team',(req,res)=>{
     res.render('team.ejs')
     
 })
@@ -138,7 +118,7 @@ app.get('/login', (req,res)=>{
     
 })
 
-app.get('/logout',(req,res,next)=>{
+app.get('/logout',isLoggedin,(req,res,next)=>{
     req.logout(function(err) {
         if (err) { return next(err); }
         req.flash('success', "Goodbye!");
@@ -146,10 +126,6 @@ app.get('/logout',(req,res,next)=>{
       });
     }); 
 
-app.get('/test', (req,res)=>{
-    res.render('test.ejs')
-    
-})
 
 
 app.get('/:id',connectLiveReload(), async(req,res)=>{
@@ -157,12 +133,11 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
         return res.send("not authenticated")
     }
     const {id} = req.params;
-    const test = await Patient.findById(req.params.id).populate('pulse')
+    const test = await Patient.findById(req.params.id).populate('pulse').populate('pulseArchieve')
     if(!test._id.equals(req.user._id)){
         return res.send("not owner")
     }
 
-     //arr = JSON.stringify(arr);
     res.render('dashboard.ejs',{test} )
 
 })
@@ -180,14 +155,10 @@ try{
 
 })
 
-
-
 app.post('/login', passport.authenticate('patientLocal'), (req,res)=>{
     res.redirect('/')
     
 })
-
-
 
 app.post('/', (req,res)=>{
     console.log(req.params);
@@ -204,8 +175,6 @@ app.post('/:id/esp32', async(req,res)=>{
     .limit(10)
     const array = items.map(item => item.pulse);
     console.log(array);
-
-   //console.log(items);
     const test = await Patient.findById(id)
     const rate = req.body.pulse;
     const pulse = new Pulse();
@@ -214,10 +183,8 @@ app.post('/:id/esp32', async(req,res)=>{
     pulse.pulse = req.body.pulse;
     pulse.patient = id;
     pulse.rate = req.body.pulse;
-     pulse.save()
+    pulse.save()
     test.pulse.push(pulse)
-    
-   // console.log(pulse)
     console.log(req.params)
     console.log(req.body)
     //bradycardia <40; tachycardia >100
@@ -235,7 +202,7 @@ app.post('/:id/esp32', async(req,res)=>{
         test.pulseArchieve.push(tachycardia);  
         await tachycardia.save() 
         await test.save()
-        return res.send('70')
+        return res.sendStatus(201)
     }
     if (mean<40) {
         const bradycardia = new PulseArchieve();
@@ -245,7 +212,7 @@ app.post('/:id/esp32', async(req,res)=>{
         test.pulseArchieve.push(bradycardia);
         await bradycardia.save()
         await test.save();
-        return res.send('40')
+        return res.sendStatus(202)
     }
     console.log(mean)
     await test.save()
