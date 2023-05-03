@@ -11,7 +11,7 @@ const flash = require('connect-flash')
 var livereload = require("livereload");
 var connectLiveReload = require("connect-livereload");
 const d3 = import("d3");
-
+const Push = require('push.js')
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -126,10 +126,7 @@ app.get('/logout',isLoggedin,(req,res,next)=>{
       });
     }); 
 
-app.get('/test', (req,res)=>{
-    res.render('test.ejs')
-    
-})
+
 
 app.get('/:id',connectLiveReload(), async(req,res)=>{
     if(!req.isAuthenticated()){
