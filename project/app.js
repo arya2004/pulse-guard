@@ -10,8 +10,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 var livereload = require("livereload");
 var connectLiveReload = require("connect-livereload");
-const d3 = import("d3");
-const Push = require('push.js')
+
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
