@@ -1,5 +1,5 @@
 <% layout('layouts/inner-page') %>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 
 
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
@@ -99,9 +99,21 @@
       xhttp.send();
 
     
-    }, 3500) ;
+    }, 1000) ;
     
   //console.log(test._id)
+  setInterval(function ( ) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+
+      };
+      
+      console.log(value)
+      xhttp.open("GET", `/lel/3`, true);
+      xhttp.send();
+
+    
+    }, 10) ;
  
     </script>
 

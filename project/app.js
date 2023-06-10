@@ -12,12 +12,7 @@ var livereload = require("livereload");
 var connectLiveReload = require("connect-livereload");
 
 
-const liveReloadServer = livereload.createServer();
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
+
 
 const Test = require('./models/test')
 const Pulse = require('./models/pulse')
@@ -77,6 +72,12 @@ app.get('/', (req,res)=>{
     res.render('index.ejs')
     
 })
+
+app.get('/lel/3', (req,res)=>{
+    res.send('69')
+    
+})
+
 app.get('/1', (req,res)=>{
     let a = (70+(Math.random()*10)-(Math.random()*10)).toString();
     console.log(a)
@@ -86,11 +87,11 @@ app.get('/1', (req,res)=>{
 })
 
 
-app.get('/2/:id',isLoggedin,isPatient, async(req,res)=>{
-    console.log(req.params);
+app.get('/2/:id', async(req,res)=>{
+    //console.log(req.params);
     const {id} = req.params;
     let pulse = await Pulse.find({patient: id}).sort({_id:-1}).limit(1)
-    console.log(pulse[0].pulse)
+   // console.log(pulse[0].pulse)
     res.send(pulse[0].pulse.toString());
     }
 )
@@ -98,9 +99,15 @@ app.get('/2/:id',isLoggedin,isPatient, async(req,res)=>{
 app.get("/3",(req,res)=>{
     res.render('pages-error-404.ejs')
 })
-app.get('/4',isLoggedin, isDoctor, async(req,res)=>{
-    const archieve = await Patient.find({isDoctor: false}).populate('pulseArchieve')
-    res.render('t.ejs',{archieve})
+app.get('/4',async(req,res)=>{
+    try {
+        const archieve = await Patient.find({isDoctor: false}).populate('pulseArchieve')
+        res.render('t.ejs',{archieve})
+    } catch (error) {
+        console.log(error)
+    }
+
+
 })
 
 app.get('/team',(req,res)=>{
@@ -117,7 +124,7 @@ app.get('/login', (req,res)=>{
     
 })
 
-app.get('/logout',isLoggedin,(req,res,next)=>{
+app.get('/logout',(req,res,next)=>{
     req.logout(function(err) {
         if (err) { return next(err); }
         req.flash('success', "Goodbye!");
@@ -131,13 +138,20 @@ app.get('/:id',connectLiveReload(), async(req,res)=>{
     if(!req.isAuthenticated()){
         return res.send("not authenticated")
     }
-    const {id} = req.params;
-    const test = await Patient.findById(req.params.id).populate('pulse').populate('pulseArchieve')
-    if(!test._id.equals(req.user._id)){
-        return res.send("not owner")
+    try {
+        const {id} = req.params;
+        const test = await Patient.findById(req.params.id).populate('pulse').populate('pulseArchieve')
+        if(!test._id.equals(req.user._id)){
+            return res.send("not owner")
+        }
+    
+        res.render('dashboard.ejs',{test} )
+        
+    } catch (error) {
+    console.log(error)
     }
 
-    res.render('dashboard.ejs',{test} )
+
 
 })
 
@@ -155,6 +169,8 @@ try{
 })
 
 app.post('/login', passport.authenticate('patientLocal'), (req,res)=>{
+    const {id} = req.params;
+
     res.redirect('/')
     
 })
