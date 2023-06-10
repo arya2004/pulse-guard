@@ -6,8 +6,9 @@
 
 const char* ssid = "";
 const char* password = "";
-String phoneNumber = "";
+String phoneNumber = "";// example "+91xxxxxxxxxx"
 String apiKey = "";
+String patientId = "";
 
 const char* serverName = "http://<base_url>/<patient_id>/esp32";
 
@@ -104,7 +105,7 @@ void loop() {
 
      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      String httpRequestData = "id=6446041a2db998bcf9bdd2da&pulse="+ String(distanceCm);           
+      String httpRequestData = "id="+ patientId +"&pulse="+ String(distanceCm);           
 
       int httpResponseCode = http.POST(httpRequestData);
       if(httpResponseCode == 200){
