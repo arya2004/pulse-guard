@@ -104,6 +104,7 @@ app.get('/4',isLoggedin, isDoctor, async(req,res)=>{
     res.render('t.ejs',{archieve})
 })
 
+
 app.get('/team',(req,res)=>{
     res.render('team.ejs')
     
