@@ -1,0 +1,120 @@
+<% layout('layouts/inner-page') %>
+
+<% layout('layouts/inner-page') %>
+
+<section id="appointment" class="appointment section-bg">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Create a new Patient</h2>
+         </div>
+      
+      <form action="/stroke" method="post" role="form" class="validated-form" >
+        <div class="row">
+
+          <div class="col-md-4 form-group">
+            <label for="age" class="label">Age</label>
+            <input type="number" name="age" class="form-control" id="age" placeholder="Your Age"  data-msg="Please enter at least 4 chars" required>
+           
+          </div>
+          <div class="col-md-4 form-group">
+            <label for="hypertension" class="label">Hypertension</label>
+            <select class="form-select" aria-label="Default select example" id="hypertension" name="hypertension" aria-placeholder="yes/no">
+              
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+          <div class="col-md-4 form-group">
+            <label for="heart_disease" class="label">Heart Disease</label>
+            <select class="form-select" aria-label="Default select example" id="heart_disease" name="heart_disease" aria-placeholder="yes/no">
+              
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label for="ever_married" class="label">Ever Married</label>
+                <select class="form-select" aria-label="Default select example" id="ever_married" name="ever_married" aria-placeholder="yes/no">
+                  
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+          <div class="col-md-4 form-group mt-3 mt-md-0">
+            <label for="work_type" class="lable">Work Type</label>
+            <select class="form-select" aria-label="Default select example" id="work_type" name="work_type" aria-placeholder="worke">
+              
+              <option value="3">Private</option>
+              <option value="4">Self-employed</option>
+              <option value="0">Other</option>
+              
+            </select>
+          </div>
+          <div class="col-md-4 form-group mt-3 mt-md-0">
+
+            <label for="Residence_type" class="lable">Resident Type</label>
+            <select class="form-select" aria-label="Default select example" id="Residence_type" name="Residence_type" aria-placeholder="Gender">
+              
+              <option value="1">Urban</option>
+              <option value="0">Rural</option>
+             
+            </select>
+          </div>
+
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4 form-group">
+                <label for="avg_glucose_level" class="label">Glucose Level</label>
+                <input type="number" name="avg_glucose_level" class="form-control" id="avg_glucose_level" placeholder="Your glucose level"  data-msg="Please enter at least 4 chars" required>
+               
+              </div>
+            <div class="col-md-4 form-group">
+                <label for="bmi" class="label">Body-Mass-Index</label>
+                <input type="number" name="bmi" class="form-control" id="bmmi" placeholder="Your BMI"  data-msg="Please enter at least 4 chars" required>
+               
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="gender" class="label">Gender</label>
+                <select class="form-select" aria-label="Default select example" id="gender" name="gender" aria-placeholder="yes/no">
+                  
+                  <option value="0">Male</option>
+                  <option value="1">Female</option>
+                  <option value="2">Other</option>
+                </select>
+              </div>
+
+
+        </div>
+        <br>
+        <div class="row">
+
+              <div class="col-md-12 form-group">
+                <label for="smoking_status" class="label">Smoking Sattus</label>
+                <select class="form-select" aria-label="Default select example" id="smoking_status" name="smoking_status" aria-placeholder="yes/no">
+                  
+                  <option value="1">Never Smoked</option>
+                  <option value="0">Unknown</option>
+                  <option value="2">Other</option>
+                </select>
+              </div>
+
+
+        </div>
+
+       
+
+
+          <br>
+        <br>
+        <div class="text-center"><button class="btn btn-success">create</button></div>
+      </form>
+
+    </div>
+  </section><!-- End Appointment Section -->
