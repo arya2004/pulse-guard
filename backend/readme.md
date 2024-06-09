@@ -12,13 +12,13 @@ This is an Express MVC (Model-View-Controller) boilerplate that provides a struc
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/arya2004/pulseGuard
+   git clone https://github.com/arya2004/pulse-guard
    ```
 
 2. Change into the project directory:
 
    ```bash
-   cd Express
+   cd backend
    ```
 
 3. Install the required dependencies:

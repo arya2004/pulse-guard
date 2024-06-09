@@ -12,13 +12,13 @@ This is a simple Flask server that provides a basic API for handling HTTP reques
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/arya2004/pulseGuard
+   git clone https://github.com/arya2004/pulse-guard
    ```
 
 2. Change into the project directory:
 
    ```bash
-   cd FlaskAPI
+   cd flask-api
    ```
 
 3. (Optional) Create and activate a virtual environment:

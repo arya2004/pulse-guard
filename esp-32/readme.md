@@ -23,7 +23,7 @@ To use this code, you need the following:
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/arya2004/pulseGuard
+   git clone https://github.com/arya2004/pulse-guard
    ```
 
 2. Open the code in your preferred IDE:
