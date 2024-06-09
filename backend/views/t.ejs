@@ -1,62 +1,50 @@
 <% layout('layouts/inner-page') %>
 
 <% if (currentUser && currentUser.isDoctor == true) { %>
+    <!-- Welcome message for doctors -->
+    <h1>Welcome, Doctor <%= currentUser.username %></h1>
 
+    <% for (let arch of archieve) { %>
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
 
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Patient details -->
+                            <h5 class="card-title">Name: <%= arch.username %></h5>
+                            <p>Age: <%= arch.age %> Gender: <%= arch.sex %></p>
 
-<h1>Welcome, Doctor <%= currentUser.username %></h1>
+                            <!-- Table with patient's pulse archive -->
+                            <table class="table datatable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Average Pulse</th>
+                                        <th scope="col">Recorded At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (let aa of arch.pulseArchieve) { %>
+                                        <tr>
+                                            <td><%= aa.pulse %></td>
+                                            <td><%= aa.calculated_at %></td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                            <!-- End Table with pulse archive -->
 
-<% for( let arch of archieve ) { %>
-    
+                        </div>
+                    </div>
 
-
-
-<section class="section">
-    <div class="row">
-      <div class="col-lg-12">
-
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Name: <%= arch.username %></h5>
-    
-            <p>Age: <%= arch.age %>        Gender:<%= arch.sex %>    </p>
-            <p></p>
-            <!-- Table with stripped rows -->
-            <table class="table datatable">
-              <thead>
-                <tr>
-                  
-                  <th scope="col">Average Pulse</th>
-                  <th scope="col">@</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% for( let aa of arch.pulseArchieve) { %>
-                
-                
-                <tr>
-                  
-                  <td><%= aa.pulse %></td>
-                  <td><%= aa.calculated_at %></td>
-                </tr>
-                <% } %>
-              </tbody>
-            </table>
-
-            
-            <!-- End Table with stripped rows -->
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <% } %>
-
-  <% } %>
-
-  <% if (currentUser && currentUser.isDoctor == false) { %>
-    <h1>infiltrator</h1>
+                </div>
+            </div>
+        </section>
     <% } %>
+
+<% } %>
+
+<% if (currentUser && currentUser.isDoctor == false) { %>
+    <!-- Message for non-doctors -->
+    <h1>Infiltrator</h1>
+<% } %>

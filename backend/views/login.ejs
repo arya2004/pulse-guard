@@ -1,28 +1,25 @@
-<% layout('layouts/inner-page') %>
+<% layout('layouts/inner-page') %> <!-- Sets the layout for this EJS file -->
 
 <section id="appointment" class="appointment section-bg">
-    <div class="container">
+  <div class="container">
 
-      <div class="section-title">
-        <h2>Login</h2>
-         </div>
-
-      <form action="/login" method="post" role="form" class="validated-form" >
-        <div class="row">
-
-          <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="text" class="form-control" name="username" id="username" placeholder="Your Username" required>
-            
-          </div>
-          <div class="col-md-4 form-group">
-            <input type="password" name="password" class="form-control" id="password" placeholder="Password"  required>
-           
-          </div>
- 
-        </div>
-        <br>
-        <div class="text-center"><button class="btn btn-success">Login</button></div>
-      </form>
-
+    <div class="section-title">
+      <h2>Login</h2>
     </div>
-  </section><!-- End Appointment Section -->
+
+    <!-- Login form -->
+    <form action="/login" method="post" role="form" class="validated-form">
+      <div class="row">
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="text" class="form-control" name="username" id="username" placeholder="Your Username" required>
+        </div>
+        <div class="col-md-4 form-group">
+          <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+        </div>
+      </div>
+      <br>
+      <div class="text-center"><button class="btn btn-success">Login</button></div>
+    </form>
+
+  </div>
+</section><!-- End Appointment Section -->

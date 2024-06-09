@@ -4,132 +4,123 @@
     <div class="container">
 
       <div class="section-title">
-        <h2>Create a new Patient</h2>
-         </div>
+        <h2>Create a new Patient</h2> <!-- Title for the new patient creation form -->
+      </div>
 
-      <form action="/new" method="post" role="form" class="validated-form" >
+      <!-- Patient creation form -->
+      <form action="/new" method="post" role="form" class="validated-form">
         <div class="row">
+          <!-- Input field for patient's name -->
           <div class="col-md-4 form-group">
             <input type="text" name="username" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
-           
           </div>
+          <!-- Input field for patient's email -->
           <div class="col-md-4 form-group mt-3 mt-md-0">
             <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" required>
-            
           </div>
+          <!-- Input field for patient's password -->
           <div class="col-md-4 form-group mt-3 mt-md-0">
             <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-            
           </div>
-
         </div>
         <br>
         <div class="row">
+          <!-- Dropdown for patient's gender -->
           <div class="col-md-4 form-group">
-            <label for="sex" class="label">GEnder</label>
+            <label for="sex" class="label">Gender</label>
             <select class="form-select" aria-label="Default select example" id="sex" name="sex" aria-placeholder="Gender">
-              
               <option value="M">Male</option>
               <option value="F">Female</option>
             </select>
           </div>
+          <!-- Dropdown for chest pain type -->
           <div class="col-md-4 form-group mt-3 mt-md-0">
-            <label for="chestpaintype" class="lable">chest pain type</label>
+            <label for="chestpaintype" class="label">Chest Pain Type</label>
             <select class="form-select" aria-label="Default select example" id="chestpaintype" name="chestpaintype" aria-placeholder="Gender">
-              
               <option value="TA">Typical Angina</option>
               <option value="ATA">Atypical Angina</option>
               <option value="NAP">Non-Anginal Pain</option>
               <option value="ASY">Asymptomatic</option>
             </select>
           </div>
+          <!-- Dropdown for resting electrocardiogram results -->
           <div class="col-md-4 form-group mt-3 mt-md-0">
-
-            <label for="resting_ecg" class="lable">resting electrocardiogram results</label>
+            <label for="resting_ecg" class="label">Resting Electrocardiogram Results</label>
             <select class="form-select" aria-label="Default select example" id="resting_ecg" name="resting_ecg" aria-placeholder="Gender">
-              
               <option value="Normal">Normal</option>
-              <option value="ST">having ST-T wave abnormality</option>
-              <option value="LVH">showing probable or definite left ventricular hypertrophy by Estes' criteria</option>
+              <option value="ST">Having ST-T wave abnormality</option>
+              <option value="LVH">Showing probable or definite left ventricular hypertrophy by Estes' criteria</option>
             </select>
           </div>
-
         </div>
         <br>
         <div class="row">
+          <!-- Input field for patient's age -->
           <div class="col-md-4 form-group">
             <input type="number" name="age" class="form-control" id="age" placeholder="Your Age" required>
-           
           </div>
+          <!-- Input field for patient's resting blood pressure -->
           <div class="col-md-4 form-group mt-3 mt-md-0">
             <input type="number" class="form-control" name="restingbloodpressure" id="restingbloodpressure" placeholder="Your Resting Blood Pressure" data-rule="email" data-msg="Please enter a valid email" required>
-            
           </div>
+          <!-- Dropdown for fasting blood sugar -->
           <div class="col-md-4 form-group mt-3 mt-md-0">
-                        <label for="fastingbloodsugar" class="lable">fastingbloodsugar</label>
+            <label for="fastingbloodsugar" class="label">Fasting Blood Sugar</label>
             <select class="form-select" aria-label="Default select example" id="fastingbloodsugar" name="fastingbloodsugar" aria-placeholder="Gender">
-              
               <option value="1">More than 120 mg/dl</option>
               <option value="0">Less than 120 mg/dl</option>
-
             </select>
           </div>
-
         </div>
         <br>
         <div class="row">
+          <!-- Dropdown for exercise-induced angina -->
           <div class="col-md-4 form-group">
-            <label for="exerciseangia" class="lable">exercise-induced angina</label>
-            <select class="form-select" aria-label="Default select example" id="exerciseangia" name="exerciseangia" aria-placeholder="Gender">
-              
-              <option value="Y">Yes</option>
-              <option value="N">No</option>
-
-            </select>
-          </div>
-          <div class="col-md-4 form-group mt-3 mt-md-0">
-            <label for="st_slope" class="lable">the slope of the peak exercise ST segment</label>
-            <select class="form-select" aria-label="Default select example" id="st_slope" name="st_slope" aria-placeholder="Gender">
-              
-              <option value="Up">Up</option>
-              <option value="Down">Down</option>
-              <option value="Flat">Flat</option>
-
-            </select>
-          </div>
-          <div class="col-md-4 form-group mt-3 mt-md-0">
-            <label for="heart_disease" class="lable">the slope of the peak exercise ST segment</label>
-            <select class="form-select" aria-label="Default select example" id="heart_disease" name="heart_disease" aria-placeholder="Gender">
-              
-              <option value="1">YEs</option>
-              <option value="0">Normal</option>
-             
-
-            </select>
-          </div>
-          
+            <label for="exerciseangia" class="label">Exercise-induced Angina</label>
+            <select class="form-select" aria-label="Default select example" id="exerciseangia" name="exerciseangia"
+            aria-placeholder="Gender">
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+          </select>
         </div>
-        <br>
-        <div class="row">
-          <div class="col-md-4 form-group">
-            <input type="number" name="cholestrol" class="form-control" id="cholestrol" placeholder="Your cholestrol" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
-           
-          </div>
-          <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="number" class="form-control" name="max_hr" id="max_hr" placeholder="Your maximum heart rate achieved" data-rule="email" data-msg="Please enter a valid email" required>
-            
-          </div>
-          <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="number" class="form-control" name="oldpeak" id="oldpeak" placeholder="oldpeak" required>
-            
-          </div>
-
+        <!-- Dropdown for the slope of the peak exercise ST segment -->
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <label for="st_slope" class="label">The Slope of the Peak Exercise ST Segment</label>
+          <select class="form-select" aria-label="Default select example" id="st_slope" name="st_slope" aria-placeholder="Gender">
+            <option value="Up">Up</option>
+            <option value="Down">Down</option>
+            <option value="Flat">Flat</option>
+          </select>
         </div>
+        <!-- Dropdown for heart disease -->
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <label for="heart_disease" class="label">Heart Disease</label>
+          <select class="form-select" aria-label="Default select example" id="heart_disease" name="heart_disease" aria-placeholder="Gender">
+            <option value="1">Yes</option>
+            <option value="0">Normal</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <!-- Input field for patient's cholesterol -->
+        <div class="col-md-4 form-group">
+          <input type="number" name="cholestrol" class="form-control" id="cholestrol" placeholder="Your Cholesterol" data-rule="minlen:4" data-msg="Please enter at least 4 chars" required>
+        </div>
+        <!-- Input field for patient's maximum heart rate achieved -->
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="number" class="form-control" name="max_hr" id="max_hr" placeholder="Your Maximum Heart Rate Achieved" data-rule="email" data-msg="Please enter a valid email" required>
+        </div>
+        <!-- Input field for oldpeak -->
+        <div class="col-md-4 form-group mt-3 mt-md-0">
+          <input type="number" class="form-control" name="oldpeak" id="oldpeak" placeholder="Oldpeak" required>
+        </div>
+      </div>
+      <br>
+      <br>
+      <!-- Button to submit the patient creation form -->
+      <div class="text-center"><button class="btn btn-success">Create</button></div>
+    </form>
 
-          <br>
-        <br>
-        <div class="text-center"><button class="btn btn-success">create</button></div>
-      </form>
-
-    </div>
-  </section><!-- End Appointment Section -->
+  </div>
+</section><!-- End Appointment Section -->

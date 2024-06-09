@@ -1,18 +1,18 @@
-<% layout('layouts/inner-page') %>
+<% layout('layouts/inner-page') %> <!-- Sets the layout for this EJS file -->
+
+<!-- Include Plotly JS library -->
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-
 <% if (currentUser && test._id.equals(currentUser._id)) { %>
- 
-    <h2 > Welcome, <%= test.username %></h2>
-    
-<% } %> 
+  <!-- Display welcome message if currentUser is defined and matches test._id -->
+  <h2>Welcome, <%= test.username %></h2>
+<% } %>
 
+<!-- Include Highcharts JS library -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
+
+<!-- Container for the temperature chart -->
 <div id="chart-temperature" class="container"></div>
-
-
-
 
 <section class="section">
   <div class="row">
@@ -20,33 +20,27 @@
 
       <div class="card">
         <div class="card-body">
+          <!-- Display user information -->
           <h5 class="card-title">Name: <%= test.username %></h5>
-  
-          <p>Age: <%= test.age %>        Gender:<%= test.sex %>     cholestrol: <%= test.cholestrol %></p>
-          <p></p>
-          <!-- Table with stripped rows -->
+          <p>Age: <%= test.age %> Gender: <%= test.sex %> Cholesterol: <%= test.cholestrol %></p>
+
+          <!-- Table with user's pulse archive -->
           <table class="table datatable">
             <thead>
               <tr>
-                
                 <th scope="col">Average Pulse</th>
                 <th scope="col">@</th>
               </tr>
             </thead>
             <tbody>
-              <% for( let aa of test.pulseArchieve) { %>
-              
-              
-              <tr>
-                
-                <td><%= aa.pulse %></td>
-                <td><%= aa.calculated_at %></td>
-              </tr>
+              <% for (let aa of test.pulseArchieve) { %>
+                <tr>
+                  <td><%= aa.pulse %></td>
+                  <td><%= aa.calculated_at %></td>
+                </tr>
               <% } %>
             </tbody>
           </table>
-
-          
           <!-- End Table with stripped rows -->
 
         </div>
@@ -56,52 +50,50 @@
   </div>
 </section>
 
+<!-- JavaScript for creating the live chart -->
 <script>
-    var chartT = new Highcharts.Chart({
-      chart:{ renderTo : 'chart-temperature' },
-      title: { text: 'Live Patient Pulse' },
-      series: [{
-        showInLegend: false,
-        data: []
-      }],
-      plotOptions: {
-        line: { animation: false,
-          dataLabels: { enabled: false }
-        },
-        series: { color: '#059e8a' }
+  // Initialize a new Highcharts chart
+  var chartT = new Highcharts.Chart({
+    chart: { renderTo: 'chart-temperature' },
+    title: { text: 'Live Patient Pulse' },
+    series: [{
+      showInLegend: false,
+      data: []
+    }],
+    plotOptions: {
+      line: {
+        animation: false,
+        dataLabels: { enabled: false }
       },
-      xAxis: { type: 'datetime',
-        dateTimeLabelFormats: { second: '%H:%M:%S' }
-      },
-      yAxis: {
-        title: { text: 'Pulse Rate' }
-        //title: { text: 'Temperature (Fahrenheit)' }
-      },
-      credits: { enabled: false }
-    });
-    setInterval(function ( ) {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var x = (new Date()).getTime(),
-              y = parseFloat(this.responseText);
-          console.log(this.responseText);
-          if(chartT.series[0].data.length > 10) {
-            chartT.series[0].addPoint([x, y], true, true, true);
-          } else {
-            chartT.series[0].addPoint([x, y], true, false, true);
-          }
+      series: { color: '#059e8a' }
+    },
+    xAxis: {
+      type: 'datetime',
+      dateTimeLabelFormats: { second: '%H:%M:%S' }
+    },
+    yAxis: {
+      title: { text: 'Pulse Rate' }
+    },
+    credits: { enabled: false }
+  });
+
+  // Update chart data periodically using AJAX
+  setInterval(function () {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var x = (new Date()).getTime(),
+          y = parseFloat(this.responseText);
+        if (chartT.series[0].data.length > 10) {
+          chartT.series[0].addPoint([x, y], true, true, true);
+        } else {
+          chartT.series[0].addPoint([x, y], true, false, true);
         }
-      };
-      
-      //console.log(value)
-      xhttp.open("GET", `/2${window.location.pathname}`, true);
-      xhttp.send();
+      }
+    };
 
-    
-    }, 1000) ;
-    
-  //console.log(test._id)
- 
-    </script>
-
+    // Send AJAX request to update chart data
+    xhttp.open("GET", `/2${window.location.pathname}`, true);
+    xhttp.send();
+  }, 1000);
+</script>
